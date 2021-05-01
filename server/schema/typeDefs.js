@@ -40,12 +40,12 @@ type Reaction {
   username: String
 }
 
-  type Query {
-    users: [User]
-    user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(_id: ID!): Thought
-  }
+type Query {
+  users: [User]
+  user(username: String!): User
+  thoughts(username: String): [Thought]
+  thought(_id: ID!): Thought
+}
 `;
 
 //export the typeDefs
