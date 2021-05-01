@@ -1,6 +1,8 @@
 const express = require('express');
 //import ApolloServer:
 const { ApolloServer } = require('apollo-server-express');
+//import middleware function:
+const {authMiddleware } = require('./utils/auth')
 
 //import typeDefs and resolvers
 const { typeDefs, resolvers } = require('./schema');
@@ -15,6 +17,7 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: authMiddleware //this ensures every request performs auth check and the updated request object will be passed to the resolvers as the `context`.
 });
 
 //integrate Apollo server with Express application as middleware - this creates a `/graphql` endpoint for the Express.js server that will serve as the main endpoing for accessing the entire API: 
