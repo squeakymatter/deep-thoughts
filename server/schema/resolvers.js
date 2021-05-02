@@ -1,10 +1,8 @@
 const { User, Thought } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
-// perform find() method on Thought model and return thought data in descending order (sort() method) - error handling is done by Apollo. Open graphQL playground to query thoughts data
 
-// pass in the `parent as a placeholder parameter. it's not used but we need to put something there wo we can access the username argument in second parameter
 
-// Use terniary operator to check of username exists. If exists, set params to an object with the username key set to that value. If does not exist, return empty object.
+
 
 //   then pass that object (with or without any data in it) to .find() method. if data exits, it performs a lookupby specific username. if no, it returns every thought.
 //test in graphQL playground
@@ -25,8 +23,12 @@ const resolvers = {
       }
       throw new AuthenticationError('Not logged in.');
     },
+    //perform find() method on Thought model and return thought data in descending order (sort() method) - error handling is done by Apollo. Open graphQL playground to query thoughts data
+    // pass in the `parent` as a placeholder parameter. it's not used but we need to put something there wo we can access the username argument in second parameter
     thoughts: async (parent, { username }) => {
+      // Use terniary operator to check of username exists. If exists, set params to an object with the username key set to that value. If does not exist, return empty object.
       const params = username ? { username } : {};
+      // then pass that object (with or without any data in it) to .find() method. if data exits, it performs a lookupby specific username. if no, it returns every thought.
       return Thought.find(params).sort({ createdAt: -1 });
     },
     // destructure the _id argument value and place it into .findOne() method to look up a single thought by its id.

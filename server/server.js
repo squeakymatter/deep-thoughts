@@ -3,6 +3,8 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 //import middleware function:
 const {authMiddleware } = require('./utils/auth')
+//import the `path` module
+const path = require('path');
 
 //import typeDefs and resolvers
 const { typeDefs, resolvers } = require('./schema');
@@ -25,6 +27,16 @@ server.applyMiddleware({ app });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+//serve up React front-end code in prod:
+//Serve up static assets:
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/built')));
+}
+ 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
+})
 
 db.once('open', () => {
   app.listen(PORT, () => {
