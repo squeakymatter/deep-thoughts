@@ -1,28 +1,43 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; //renamed BrowserRouter to Router to make it easier to work with.
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Login from './pages/Login';
+import NoMatch from './pages/NoMatch';
+import SingleThought from './pages/SingleThought';
+import Profile from './pages/Profile';
+import Signup from './pages/Signup';
 
 import Home from './pages/Home';
 
 //establish connection to backend server's graphql endpoint using Apollo
 const client = new ApolloClient({
-  uri: 'graphql',
+  uri: '/graphql',
 });
 
 function App() {
   return (
-    // wrap JSX with Apollo provider - pass the client variable in as the value of the `client` proper in the provider, so everything between JSX tags will have access to server's API data through the `client`
     <ApolloProvider client={client}>
-      <div className='flex-column justify-flex-start min-100-vh'>
-        <Header />
-        <div className='container'>
-          <Home />
+      <Router>
+        <div className='flex-column justify-flex-start min-100-vh'>
+          <Header />
+          <div className='container'>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/signup' component={Signup} />
+              <Route exact path='/profile/:username?' component={Profile} />
+              <Route exact path='/thought/:id' component={SingleThought} />
+
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </Router>
     </ApolloProvider>
   );
 }

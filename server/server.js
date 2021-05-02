@@ -2,7 +2,7 @@ const express = require('express');
 //import ApolloServer:
 const { ApolloServer } = require('apollo-server-express');
 //import middleware function:
-const {authMiddleware } = require('./utils/auth')
+const { authMiddleware } = require('./utils/auth');
 //import the `path` module
 const path = require('path');
 
@@ -19,10 +19,10 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware //this ensures every request performs auth check and the updated request object will be passed to the resolvers as the `context`.
+  context: authMiddleware, //this ensures every request performs auth check and the updated request object will be passed to the resolvers as the `context`.
 });
 
-//integrate Apollo server with Express application as middleware - this creates a `/graphql` endpoint for the Express.js server that will serve as the main endpoing for accessing the entire API: 
+//integrate Apollo server with Express application as middleware - this creates a `/graphql` endpoint for the Express.js server that will serve as the main endpoing for accessing the entire API:
 server.applyMiddleware({ app });
 
 app.use(express.urlencoded({ extended: false }));
@@ -31,12 +31,12 @@ app.use(express.json());
 //serve up React front-end code in prod:
 //Serve up static assets:
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/built')));
+  app.use(express.static(path.join(__dirname, '../client/build')));
 }
- 
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'))
-})
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 db.once('open', () => {
   app.listen(PORT, () => {
