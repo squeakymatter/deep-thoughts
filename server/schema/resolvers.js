@@ -1,10 +1,7 @@
 const { User, Thought } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 
-
-
-
-//   then pass that object (with or without any data in it) to .find() method. if data exits, it performs a lookupby specific username. if no, it returns every thought.
+//   then pass that object (with or without any data in it) to .find() method. if data exits, it performs a lookup by specific username. if no, it returns every thought.
 //test in graphQL playground
 
 //import signToken() function:

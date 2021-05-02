@@ -14,7 +14,7 @@ const { gql } = require('apollo-server-express');
 // #Int = integer
 
 //in User type, user will return all the data in their Mongoose model
-//friends field is an array that will be populated with data that also adheres to the `User` type as a user's friends should folow the same data pattern as the user
+//friends field is an array that will be populated with data that also adheres to the `User` type as a user's friends should follow the same data pattern as the user
 // notice `thoughts` field is an array of `Thought` types
 const typeDefs = gql`
   type User {
